@@ -1,0 +1,5 @@
+<select #dropdown (change)="colorService.setColor(dropdown.value)">
+  @for (color of colorService.colors(); track color.name) {
+  <option [value]="color.name">{{ color.name }} ({{ color.code }})</option>
+  }
+</select>

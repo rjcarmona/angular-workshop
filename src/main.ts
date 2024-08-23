@@ -1,48 +1,25 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { of, Subject, takeUntil } from 'rxjs';
-import { CurrencySwitcherComponent } from './app/currency-switcher/currency-switcher.component';
+import { ColorSwitcherComponent } from './app/color-switcher/color-switcher.component';
+import { ColorService } from './color.service';
 
 @Component({
   selector: 'my-app',
   standalone: true,
-  imports: [CommonModule, CurrencySwitcherComponent],
+  imports: [CommonModule, ColorSwitcherComponent],
   template: `
-    <h1>Hello {{ nameToRender }}</h1>
-    <button (click)="updateValue('World!')">Update</button>
+    <app-color-switcher></app-color-switcher>
+    The selected currency is:
+    <span style="background-color: ">???</span>
   `,
 })
-export class App implements OnInit, OnDestroy {
-  // With Signals
-
-  // nameToRender = signal('Angular');
-
-  // <h1>Hello {{ nameToRender }}</h1>
-  // <button (click)="updateValue('World!')">Update</button>
-
-  // ---------------------------
-
-  // With Observables
-
-  name$ = of('Angular!');
-  nameToRender = '';
-  destroy$: Subject<boolean> = new Subject<boolean>();
+export class App implements OnInit {
+  colorService = inject(ColorService);
 
   ngOnInit() {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-      this.nameToRender = val;
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-  }
-
-  updateValue(value: string) {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.nameToRender = value;
-    });
+    // Render the selected color name from the dropdown instead of ???
+    // Set the <span> background color based on the selected color code
   }
 }
 
