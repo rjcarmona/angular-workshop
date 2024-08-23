@@ -1,47 +1,25 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { of, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'my-app',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <h1>Hello {{ nameToRender }}</h1>
-    <button (click)="updateValue('World!')">Update</button>
+    <h1>{{ message() }}</h1>
+    <button (click)="name.set('Pedro!')">Update name to Pedro</button>
+    <button (click)="greeting.set('Hola!')">Update greeting to Hola</button>
+    <button (click)="greeting.set('Hoi!')">Update greeting to Hoi</button>
   `,
 })
-export class App implements OnInit, OnDestroy {
-  // With Signals
+export class App {
+  greeting = signal('Hello');
+  name = signal('Peter');
+  message = computed(() => `${this.greeting()} ${this.name()}`);
 
-  // nameToRender = signal('Angular');
-
-  // <h1>Hello {{ nameToRender }}</h1>
-  // <button (click)="updateValue('World!')">Update</button>
-
-  // ---------------------------
-
-  // With Observables
-
-  name$ = of('Angular!');
-  nameToRender = '';
-  destroy$: Subject<boolean> = new Subject<boolean>();
-
-  ngOnInit() {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-      this.nameToRender = val;
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-  }
-
-  updateValue(value: string) {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.nameToRender = value;
-    });
+  constructor() {
+    effect(() => console.log(`The ${this.message()} is changing!`));
   }
 }
 
