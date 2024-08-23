@@ -2,12 +2,11 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { of, Subject, takeUntil } from 'rxjs';
-import { CurrencySwitcherComponent } from './app/currency-switcher/currency-switcher.component';
 
 @Component({
   selector: 'my-app',
   standalone: true,
-  imports: [CommonModule, CurrencySwitcherComponent],
+  imports: [CommonModule],
   template: `
     <h1>Hello {{ nameToRender }}</h1>
     <button (click)="updateValue('World!')">Update</button>
