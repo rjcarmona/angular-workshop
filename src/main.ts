@@ -10,16 +10,18 @@ import { ColorService } from './color.service';
   imports: [CommonModule, ColorSwitcherComponent],
   template: `
     <app-color-switcher></app-color-switcher>
-    The selected currency is:
-    <span style="background-color: ">???</span>
+    The result of mixing ?blue? and ?current? is:
+    <span style="background-color:">???</span>
   `,
 })
 export class App implements OnInit {
   colorService = inject(ColorService);
 
   ngOnInit() {
-    // Render the selected color name from the dropdown instead of ???
-    // Set the <span> background color based on the selected color code
+    // Render the blue color name instead of ?blue?
+    // Render the `currentColor` name instead of ?current?
+    // Set the <span> background color based on the mixed color code
+    // Render the mixed color name instead of ???
   }
 }
 

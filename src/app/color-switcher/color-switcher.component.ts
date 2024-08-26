@@ -10,4 +10,5 @@ import { ColorService } from '../../color.service';
 })
 export class ColorSwitcherComponent {
   colorService = inject(ColorService);
+  // Create a variable that filters the colors `signal` excluding the blue color
 }
