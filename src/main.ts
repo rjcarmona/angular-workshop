@@ -10,7 +10,7 @@ import { ColorService } from './color.service';
   imports: [CommonModule, ColorSwitcherComponent],
   template: `
     <app-color-switcher></app-color-switcher>
-    The selected currency is:
+    The selected color is:
     <span style="background-color: ">???</span>
   `,
 })
