@@ -15,6 +15,10 @@ import { ColorService } from './color.service';
   `,
 })
 export class App implements OnInit {
+  // Dependency Injection
+  // constructor(private colorServiceOld: ColorService) {
+  //  ...
+  // }
   colorService = inject(ColorService);
 
   ngOnInit() {
