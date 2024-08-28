@@ -1,0 +1,51 @@
+<div class="article">
+  <h3>{{ article.title }}</h3>
+  <!-- Image wrapped in a @defer block -->
+  @defer (on hover) {
+  <img
+    style="height: 350px; width: 450px"
+    [src]="article.imageUrl"
+    alt="Article Image"
+  />
+  } @placeholder {
+  <!-- Placeholder content while loading -->
+  <div class="placeholder">
+    <p>Image placeholder...</p>
+  </div>
+  } @loading(minimum 1s) {
+  <!-- Loading indicator -->
+  <div class="loading">
+    <img
+      style="height: 150px; width: 150px"
+      src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTJpbzV1eWpvOHdpZTRjMXF4NGhqMzlleWM1Y2Zwc2U1a292dm9jbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/uIJBFZoOaifHf52MER/giphy.gif"
+      alt="Loading..."
+    />
+  </div>
+  }
+
+  <!-- Comments section wrapped in a @defer block -->
+  @defer (on interaction) {
+  <div class="comments">
+    <h4>Comments</h4>
+    <ul>
+      @for (comment of article.comments; track article.title) {
+      <li>{{ comment }}</li>
+      }
+    </ul>
+  </div>
+  } @placeholder {
+  <!-- Placeholder content while loading -->
+  <div class="placeholder">
+    <p>Comments placeholder...</p>
+  </div>
+  } @loading(minimum 1s) {
+  <!-- Loading indicator -->
+  <div class="loading">
+    <img
+      style="height: 150px; width: 150px"
+      src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTJpbzV1eWpvOHdpZTRjMXF4NGhqMzlleWM1Y2Zwc2U1a292dm9jbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/uIJBFZoOaifHf52MER/giphy.gif"
+      alt="Loading..."
+    />
+  </div>
+  }
+</div>

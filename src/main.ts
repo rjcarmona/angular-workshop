@@ -1,47 +1,26 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { of, Subject, takeUntil } from 'rxjs';
+import { NewsService } from './app/news.service';
+import { ArticleComponent } from './app/article/article.component';
 
 @Component({
   selector: 'my-app',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ArticleComponent],
   template: `
-    <h1>Hello {{ nameToRender }}</h1>
-    <button (click)="updateValue('World!')">Update</button>
+    @for (article of articles; track article.title) {
+    <app-article [article]="article"></app-article>
+    }
   `,
 })
-export class App implements OnInit, OnDestroy {
-  // With Signals
+export class App implements OnInit {
+  articles: any[] = [];
+  newsService = inject(NewsService);
 
-  // nameToRender = signal('Angular');
-
-  // <h1>Hello {{ nameToRender }}</h1>
-  // <button (click)="updateValue('World!')">Update</button>
-
-  // ---------------------------
-
-  // With Observables
-
-  name$ = of('Angular!');
-  nameToRender = '';
-  destroy$: Subject<boolean> = new Subject<boolean>();
-
-  ngOnInit() {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe((val) => {
-      this.nameToRender = val;
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-  }
-
-  updateValue(value: string) {
-    this.name$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.nameToRender = value;
-    });
+  ngOnInit(): void {
+    this.articles = this.newsService.getArticles();
   }
 }
 
