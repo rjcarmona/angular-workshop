@@ -11,7 +11,9 @@ import { ColorService } from './color.service';
   template: `
     <app-color-switcher></app-color-switcher>
     The selected color is:
-    <span style="background-color: ">???</span>
+    <span style="background-color: {{ colorService.currentColor().code }}">{{
+      colorService.currentColor().name
+    }}</span>
   `,
 })
 export class App implements OnInit {

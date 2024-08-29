@@ -14,6 +14,9 @@ export class ColorService {
   readonly currentColor = signal(DEFAULT_COLORS[0]);
 
   setColor(colorName: string) {
-    // Set `currentColor` object value based on the `colorName` param.
+    const selectedColor = this.colors().find((c) => c.name === colorName);
+    if (selectedColor) {
+      this.currentColor.set(selectedColor);
+    }
   }
 }
